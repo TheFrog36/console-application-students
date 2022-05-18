@@ -1,10 +1,11 @@
 const prompt = require('prompt')
 const model = require('./model')
 const readWriteFile = require('./readWriteFile.js')
+const textManipulation = require('./textManipulation.js')
 
 prompt.start()
-const arrayOfStudents = readWriteFile.readFile('./studentList.json')
-
+const myFile = readWriteFile.readFile('./studentList.json')
+const arrayOfStudents = textManipulation.jsonToArrayOfObject(myFile)
 function startMenu(){
     console.log('Choose an option:');
     console.log('1) Add new student');
@@ -51,7 +52,7 @@ function addStudent(){
 }
 
 function createStudent(err, result){
-    const student = new model.Student(result.name, result.surname, result.yob)
+    const student = new model.Student(result.name, result.surname, result.yob);
     arrayOfStudents.push(student)
     readWriteFile.writeFile('./studentList.json', arrayOfStudents)
     startMenu()
